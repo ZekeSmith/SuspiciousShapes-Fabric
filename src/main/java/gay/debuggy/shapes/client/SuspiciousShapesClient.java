@@ -1,7 +1,6 @@
 package gay.debuggy.shapes.client;
 
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +11,10 @@ public class SuspiciousShapesClient implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("Suspicious Shapes");
 
 	@Override
-	public void onInitializeClient(ModContainer mod) {
-		Config.init(mod);
-		
+	public void onInitializeClient() {
+		Config.init();
+
 		PreparableModelLoadingPlugin.register(SuspiciousShapesModelLoadingPlugin::loadData, new SuspiciousShapesModelLoadingPlugin());
 	}
-	
+
 }

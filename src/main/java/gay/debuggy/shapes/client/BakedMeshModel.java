@@ -18,80 +18,80 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
 
 public class BakedMeshModel implements BakedModel, FabricBakedModel {
 	protected final List<Mesh> meshes;
 	protected final Sprite particleSprite;
 	protected ModelTransformation transform = ModelTransformation.NONE;
-	
+
 	public BakedMeshModel(Sprite particleSprite, ModelTransformation transform, Mesh... meshes) {
 		this.meshes = ImmutableList.copyOf(meshes);
 		this.particleSprite = particleSprite;
 		if (transform!=null) this.transform = transform;
 	}
-	
+
 	//implements BakedModel {
-	
+
 		@Override
-		public List<BakedQuad> getQuads(BlockState state, Direction face, RandomGenerator random) {
+		public List<BakedQuad> getQuads(BlockState state, Direction face, Random random) {
 			return ImmutableList.of();
 		}
-	
+
 		@Override
 		public boolean useAmbientOcclusion() {
 			return true;
 		}
-	
+
 		@Override
 		public boolean hasDepth() {
 			return true;
 		}
-	
+
 		@Override
 		public boolean isSideLit() {
 			return true;
 		}
-	
+
 		@Override
 		public boolean isBuiltin() {
 			return false;
 		}
-	
+
 		@Override
 		public Sprite getParticleSprite() {
 			return particleSprite;
 		}
-	
+
 		@Override
 		public ModelTransformation getTransformation() {
 			return transform;
 		}
-	
+
 		@Override
 		public ModelOverrideList getOverrides() {
 			return ModelOverrideList.EMPTY;
 		}
-	
+
 	//}
-	
+
 	//implements FabricBakedModel {
-		
+
 		@Override
 		public boolean isVanillaAdapter() {
 			return false;
 		}
-	
+
 		@Override
-		public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<RandomGenerator> randomSupplier, RenderContext context) {
+		public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
 			for(Mesh mesh : meshes) {
 				context.meshConsumer().accept(mesh);
 			}
 		}
-	
+
 		@Override
-		public void emitItemQuads(ItemStack stack, Supplier<RandomGenerator> randomSupplier, RenderContext context) {
+		public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
 			for(Mesh mesh : meshes) {
 				context.meshConsumer().accept(mesh);
 			}
